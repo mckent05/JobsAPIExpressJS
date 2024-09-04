@@ -3,3 +3,5 @@ class CustomAPI extends Error {
         super(message)
     }
 }
+
+module.exports = CustomAPI

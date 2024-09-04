@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const connectDB = require("./Config/db")
+const authRouter = require("./routes/auth")
 const app = express()
 let connectionString = process.env.MONGO_URI
 connectionString = connectionString.replace("<password>", encodeURIComponent(process.env.password))
@@ -8,8 +9,9 @@ connectionString = connectionString.replace("<password>", encodeURIComponent(pro
 const PORT = 3000
 
 
-app.use(express.json())
 
+app.use(express.json())
+app.use("ap/v1/auth", authRouter)
 
 
 const start = async () => {
