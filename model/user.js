@@ -1,5 +1,5 @@
 const moongose = require("mongoose")
-const bycrpt = require("bcrypt")
+const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
 
@@ -27,8 +27,8 @@ const UserSchema = new moongose.Schema({
 })
 
 UserSchema.pre('save', async function() {
-    const salt = await bycrpt.genSalt(10)
-    this.password = bycrpt.hash(this.password, salt)
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
 })
 
 UserSchema.methods.createJWT = async function () {
@@ -40,7 +40,7 @@ UserSchema.methods.createJWT = async function () {
 }
 
 UserSchema.methods.comparePassword = async function(candidatePassword) {
-    const isMatch = bycrpt.compare(candidatePassword, this.password)
+    const isMatch = await bcrypt.compare(candidatePassword, this.password)
     return isMatch
 }
 

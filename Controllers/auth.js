@@ -5,7 +5,8 @@ const { StatusCodes } = require('http-status-codes')
 
 const register = async ( req, res) => {
     const user = await User.create({...req.body})
-    const token = user.createJWT()
+    const token = await user.createJWT()
+    console.log(token)
     res.status( StatusCodes.OK).json({token})
 }
 
@@ -20,7 +21,7 @@ const login = async(req, res) => {
     if(!user || !isPasswordMatch) {
         throw new UnAuthenticatedError("Invalid Credentials")
     }
-    const token = user.createJWT()
+    const token = await user.createJWT()
     res.status( StatusCodes.OK).json({token})
 }
 
