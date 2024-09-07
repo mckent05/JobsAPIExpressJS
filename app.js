@@ -4,6 +4,7 @@ const connectDB = require("./Config/db")
 const authRouter = require("./routes/auth")
 const errorHandler = require("./middleWare/errorHandler")
 const authenticationHandler = require("./middleWare/authenticationHandler")
+const jobRoutes = require("./routes/jobs")
 const app = express()
 let connectionString = process.env.MONGO_URI
 connectionString = connectionString.replace("<password>", encodeURIComponent(process.env.password))
@@ -14,6 +15,7 @@ const PORT = 3000
 
 app.use(express.json())
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/jobs", authenticationHandler, jobRoutes)
 app.use(errorHandler)
 
 
